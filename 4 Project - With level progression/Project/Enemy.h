@@ -1,5 +1,8 @@
 #pragma once
 #include "PlacableActor.h"
+
+
+
 class Enemy : public PlacableActor
 {
 public:
@@ -23,6 +26,5 @@ private:
 	int m_directionY;
 
 	void UpdateDirection(int& current, int& direction, int& movement);
-
 };
 

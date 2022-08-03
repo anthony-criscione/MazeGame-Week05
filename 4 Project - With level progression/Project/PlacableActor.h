@@ -22,6 +22,7 @@ enum class ActorType
 	Player
 };
 
+//ICollidable
 class PlacableActor
 {
 public:
