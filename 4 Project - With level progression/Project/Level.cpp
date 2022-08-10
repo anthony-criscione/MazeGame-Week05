@@ -199,15 +199,13 @@ int Level::GetIndexFromCoordinates(int x, int y)
 	return x + y * m_width;
 }
 
-// Updates all actors and returns a colliding actor if there is one
-PlacableActor* Level::UpdateActors(int x, int y)
+PlacableActor* Level::CheckForCollision(int x, int y)
 {
 	PlacableActor* collidedActor = nullptr;
 
+	std::lock_guard<std::mutex> Guard(m_mutex);
 	for (auto actor = m_pActors.begin(); actor != m_pActors.end(); ++actor)
 	{
-		(*actor)->Update(); // Update all actors
-
 		if (!(*actor)->IsActive())
 		{
 			continue;
@@ -222,4 +220,14 @@ PlacableActor* Level::UpdateActors(int x, int y)
 	}
 
 	return collidedActor;
+}
+
+// Updates all actors and returns a colliding actor if there is one
+void Level::UpdateActors()
+{
+	std::lock_guard<std::mutex> Guard(m_mutex);
+	for (auto actor = m_pActors.begin(); actor != m_pActors.end(); ++actor)
+	{
+		(*actor)->Update(); // Update all actors
+	}
 }

@@ -6,6 +6,11 @@
 #include <vector>
 #include <string>
 
+namespace std
+{
+	class thread;
+}
+
 class Level;
 class StateMachineExampleGame;
 
@@ -36,6 +41,8 @@ protected:
 	void ProcessInput() override;
 	void CheckBeatLevel();
 
+	bool m_shouldProcessInput = false;
+	std::thread* m_inputThread = nullptr;
 private:
 	void HandleCollision(int newPlayerX, int newPlayerY);
 	bool Load();

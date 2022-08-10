@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <mutex>
 
 class PlacableActor;
 
@@ -18,7 +19,8 @@ public:
 
 	bool Load(std::string levelName, int* playerX, int* playerY);
 	void Draw();
-	PlacableActor* UpdateActors(int x, int y);
+	void UpdateActors();
+	PlacableActor* CheckForCollision(int x, int y);
 
 	bool IsSpace(int x, int y);
 	bool IsWall(int x, int y);
@@ -31,5 +33,7 @@ public:
 private:
 	bool ConvertLevel(int* playerX, int* playerY);
 	int GetIndexFromCoordinates(int x, int y);
+
+	std::mutex m_mutex;
 
 };
